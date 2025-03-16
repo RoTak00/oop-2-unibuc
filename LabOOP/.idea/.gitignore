@@ -6,3 +6,17 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+/out/production/
+/.idea
+
+
+checkstyle-idea.xml
+lab.iml
+misc.xml
+modules.xml
+uiDesigner.xml
+vcs.xml
+workspace.xml
+
+*.class
+/target/
