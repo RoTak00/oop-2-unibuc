@@ -1,3 +1,5 @@
+package model;
+
 public class Phoenix extends Creature {
 
     public Phoenix(String name, int rank, int maxHealth, int power, int defense) {

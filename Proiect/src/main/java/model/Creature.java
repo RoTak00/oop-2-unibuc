@@ -1,12 +1,16 @@
-public class Monster implements Being {
-    private final String name;
-    private final int rank;
-    private final int maxHealth;
-    private int currentHealth;
-    private final int power;
-    private final int defense;
+package model;
 
-    public Monster(String name, int rank, int maxHealth, int power, int defense) {
+import enums.StatType;
+
+public abstract class Creature implements Being {
+    protected String name;
+    protected int rank;
+    protected int maxHealth;
+    protected int currentHealth;
+    protected int power;
+    protected int defense;
+
+    public Creature(String name, int rank, int maxHealth, int power, int defense) {
         this.name = name;
         this.rank = rank;
         this.maxHealth = maxHealth;
@@ -57,26 +61,36 @@ public class Monster implements Being {
 
     @Override
     public void heal(int amount) {
-        if (isAlive()) {
+        if(isAlive()) {
             currentHealth = Math.min(currentHealth + amount, maxHealth);
         }
     }
 
+    public void boostStat(StatType stat, int value) {
+        switch (stat) {
+            case StatType.POWER -> power += value;
+            case StatType.DEFENSE -> defense += value;
+            case StatType.MAX_HEALTH -> maxHealth += value;
+            default -> throw new IllegalStateException("Unexpected value: " + stat);
+        }
+    }
 
     @Override
     public int getStat(StatType stat) {
         return switch (stat) {
-            case POWER -> power;
-            case DEFENSE -> defense;
-            case MAX_HEALTH -> maxHealth;
-            case CURRENT_HEALTH -> currentHealth;
-            case RANK -> rank;
+            case StatType.POWER -> power;
+            case StatType.DEFENSE -> defense;
+            case StatType.MAX_HEALTH -> maxHealth;
+            case StatType.CURRENT_HEALTH -> currentHealth;
+            case StatType.RANK -> rank;
         };
     }
 
     @Override
     public void revive() {
-        currentHealth = maxHealth;
+        if (!isAlive()) {
+            currentHealth = maxHealth;
+        }
     }
 
     @Override
@@ -86,7 +100,15 @@ public class Monster implements Being {
     }
 
     @Override
-    public String getType() {
-        return "Monster";
+    public String getShortStatus()
+    {
+        return String.format("%s (%s, Rank %d)", name, getType(), rank);
     }
+
+    // Each creature type evolves in a different way
+    public abstract void evolve();
+
+    @Override
+    public abstract String getType();
+
 }

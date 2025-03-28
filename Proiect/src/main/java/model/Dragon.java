@@ -1,3 +1,5 @@
+package model;
+
 public class Dragon extends Creature {
 
     public Dragon(String name, int rank, int maxHealth, int power, int defense) {

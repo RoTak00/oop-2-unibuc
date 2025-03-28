@@ -1,3 +1,5 @@
+package model;
+
 public class Golem extends Creature {
 
     public Golem(String name, int rank, int maxHealth, int power, int defense) {

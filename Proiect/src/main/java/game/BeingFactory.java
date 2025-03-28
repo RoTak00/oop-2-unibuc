@@ -1,11 +1,17 @@
+package game;
+
+import model.*;
+
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+import enums.CreatureType;
+import util.NameFactory;
 
 public class BeingFactory {
     private static final Random random = new Random();
 
-    // Creature generators by type
+    // model.Creature generators by type
     private static final List<Function<Integer, Creature>> creatureGenerators = List.of(
             BeingFactory::randomDragon,
             BeingFactory::randomGolem,
@@ -19,9 +25,9 @@ public class BeingFactory {
 
     public static Creature createCreature(CreatureType type, int rank) {
         return switch (type) {
-            case DRAGON -> randomDragon(rank);
-            case GOLEM -> randomGolem(rank);
-            case PHOENIX -> randomPhoenix(rank);
+            case CreatureType.DRAGON -> randomDragon(rank);
+            case CreatureType.GOLEM -> randomGolem(rank);
+            case CreatureType.PHOENIX -> randomPhoenix(rank);
             default -> throw new IllegalArgumentException("Unknown creature type: " + type);
         };
     }
@@ -34,7 +40,7 @@ public class BeingFactory {
         return new Monster(name, rank, maxHealth, power, defense);
     }
 
-    // --- Creature Type Generators ---
+    // --- model.Creature Type Generators ---
 
     private static Dragon randomDragon(int rank) {
         String name = NameFactory.generateName();

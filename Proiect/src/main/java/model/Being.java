@@ -1,3 +1,7 @@
+package model;
+
+import enums.StatType;
+
 public interface Being {
     String getName();
     int getRank();
@@ -11,9 +15,10 @@ public interface Being {
 
     void receiveDamage(int amount);
     void heal(int amount);
-    int getStat(StatType stat); // or use StatType
+    int getStat(StatType stat); // or use enums.StatType
     void revive();
 
     String getStatus();
+    String getShortStatus();
     String getType();
 }
