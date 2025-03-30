@@ -13,10 +13,10 @@ public class CreatureMenuState implements GameState {
     {
         UIHelper.printLine();
         UIHelper.printMenu(List.of(
+                "Back",
                 "List creatures",
-                "Creature Options",
-                "Back"
-        ));
+                "Creature Options"
+        ), 0);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class CreatureMenuState implements GameState {
 
         switch(choice)
         {
+            case 0 -> game.goBack();
             case 1 -> game.listCreatures();
-            case 2 -> game.setState(new CreatureSelectMenuState());
-            case 3 -> game.setState(new MainMenuState());
+            case 2 -> game.pushState(new CreatureSelectMenuState());
             default -> System.out.println("Invalid choice");
         }
     }

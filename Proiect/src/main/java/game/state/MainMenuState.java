@@ -11,9 +11,10 @@ public class MainMenuState implements GameState {
     {
         UIHelper.printLine();
         UIHelper.printMenu(List.of(
+                "Exit",
                 "Creatures",
-                "Exit"
-        ));
+                "Inventory"
+        ), 0);
     }
 
     @Override
@@ -22,8 +23,9 @@ public class MainMenuState implements GameState {
 
         switch(choice)
         {
-            case 1 -> game.setState(new CreatureMenuState());
-            case 2 -> game.exit();
+            case 0 -> game.exit();
+            case 1 -> game.pushState(new CreatureMenuState());
+            case 2 -> game.pushState(new InventoryMenuState());
             default -> System.out.println("Invalid option");
         }
     }

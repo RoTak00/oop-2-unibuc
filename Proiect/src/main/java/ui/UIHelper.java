@@ -4,11 +4,11 @@ import java.util.List;
 
 public class UIHelper {
 
-    public static void printMenu(List<String> options)
+    public static void printMenu(List<String> options, int start)
     {
         for(int i = 0; i < options.size(); i++)
         {
-            System.out.println((i + 1) + ". " + options.get(i));
+            System.out.println((i + start) + ". " + options.get(i));
         }
     }
 

@@ -3,24 +3,24 @@ package game;
 import game.state.GameState;
 import game.state.MainMenuState;
 import model.Creature;
+import model.items.FoodItem;
 import ui.InputHelper;
 import ui.UIHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
 
     private static Game instance;
-    private GameState state;
+    private final Deque<GameState> stateStack = new ArrayDeque<>();
     private boolean isRunning = true;
 
     private final List<Creature> creatures = new ArrayList<>();
 
     private final Scanner scanner = new Scanner(System.in);
     private final Random random = new Random();
+
+    private final Inventory inventory = new Inventory();
 
     private Game() {};
 
@@ -31,9 +31,22 @@ public class Game {
         return instance;
     }
 
-    public void setState(GameState state) {
-        this.state = state;
+    public void pushState(GameState state) {
+        stateStack.push(state);
     }
+
+    public void goBack() {
+        if (stateStack.size() > 1) {
+            stateStack.pop(); // Remove current
+        } else {
+            System.out.println("You are at the root menu.");
+        }
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
 
     public void exit()
     {
@@ -44,18 +57,22 @@ public class Game {
     {
         System.out.println("Welcome to CreatureLand");
         System.out.println("As you wake up, you notice a new creature next to you...");
-        this.state = new MainMenuState();
+        pushState(new MainMenuState());
 
         Creature creature = BeingFactory.createRandomCreature(1);
         creatures.add(creature);
+
+        FoodItem item = FoodFactory.generateRandomFood(1);
+        inventory.addItem(item);
 
         System.out.println(creature.getName() + " says hello...");
 
         boolean playing = true;
         while(isRunning)
         {
-            state.display();
-            state.handleInput(this);
+            GameState currentState = stateStack.peek();
+            currentState.display();
+            currentState.handleInput(this);
         }
     }
 

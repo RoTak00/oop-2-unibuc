@@ -19,9 +19,10 @@ public class SingleCreatureActionState implements GameState {
     {
         UIHelper.printTitle("Actions: " + creature.getName());
         UIHelper.printMenu(List.of(
+                "Back",
                 "Show info",
-                "Back"
-        ));
+                "Use item"
+        ), 0);
     }
 
     @Override
@@ -31,8 +32,9 @@ public class SingleCreatureActionState implements GameState {
 
         switch(choice)
         {
+            case 0 -> game.goBack();
             case 1 -> System.out.println(creature.getStatus());
-            case 2 -> game.setState(new CreatureSelectMenuState());
+            case 2 -> game.pushState(new UseItemOnCreatureState(creature));
             default -> System.out.println("Invalid choice");
         }
     }

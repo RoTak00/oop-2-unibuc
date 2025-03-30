@@ -23,14 +23,14 @@ public class CreatureSelectMenuState implements GameState{
         if(creatures.isEmpty())
         {
             System.out.println("No creatures owned...");
-            game.setState(new CreatureMenuState());
+            game.goBack();
             return;
         }
 
         int choice = InputHelper.getInt("Select a creature: ");
         if(choice == 0)
         {
-            game.setState(new CreatureMenuState());
+            game.goBack();
             return;
         }
         choice = choice - 1;
@@ -41,7 +41,7 @@ public class CreatureSelectMenuState implements GameState{
             return;
         }
         Creature creature = creatures.get(choice);
-        game.setState(new SingleCreatureActionState(creature));
+        game.pushState(new SingleCreatureActionState(creature));
 
     }
 }
