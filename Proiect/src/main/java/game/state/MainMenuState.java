@@ -24,7 +24,7 @@ public class MainMenuState implements GameState {
         switch(choice)
         {
             case 0 -> game.exit();
-            case 1 -> game.pushState(new CreatureMenuState());
+            case 1 -> game.pushState(new CreatureSelectMenuState());
             case 2 -> game.pushState(new InventoryMenuState());
             default -> System.out.println("Invalid option");
         }

@@ -21,7 +21,8 @@ public class SingleCreatureActionState implements GameState {
         UIHelper.printMenu(List.of(
                 "Back",
                 "Show info",
-                "Use item"
+                "Use item",
+                "Fight"
         ), 0);
     }
 
@@ -35,6 +36,7 @@ public class SingleCreatureActionState implements GameState {
             case 0 -> game.goBack();
             case 1 -> System.out.println(creature.getStatus());
             case 2 -> game.pushState(new UseItemOnCreatureState(creature));
+            case 3 -> game.pushState(new FightState(creature));
             default -> System.out.println("Invalid choice");
         }
     }

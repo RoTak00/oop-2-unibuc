@@ -71,6 +71,7 @@ public abstract class Creature implements Being {
             case StatType.POWER -> power += value;
             case StatType.DEFENSE -> defense += value;
             case StatType.MAX_HEALTH -> maxHealth += value;
+            case StatType.RANK -> rank += value;
             default -> throw new IllegalStateException("Unexpected value: " + stat);
         }
     }
