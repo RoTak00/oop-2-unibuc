@@ -23,10 +23,10 @@ public class FightFinishedState implements GameState {
 
     @Override
     public void display() {
-        UIHelper.printTitle("🎉 Fight Results");
+        UIHelper.printTitle("Battle Results...");
 
         if (creature.isAlive() && !monster.isAlive()) {
-            System.out.println("🏆 " + creature.getName() + " won the battle!");
+            System.out.println(creature.getName() + " won the battle!");
 
             int outcome = random.nextInt(100); // 0–99
 
@@ -34,20 +34,20 @@ public class FightFinishedState implements GameState {
                 // 70% chance: reward food
                 FoodItem food = FoodFactory.generateRandomFood(creature.getRank());
                 Game.getInstance().getInventory().addItem(food);
-                System.out.println("🧺 You found some food after the battle: " + food.getName());
+                System.out.println("You found some food after the battle: " + food.getName());
 
                 // 40% chance to generate another
                 if (random.nextInt(100) < 40) {
                     FoodItem more_food = FoodFactory.generateRandomFood(creature.getRank() + 1);
                     Game.getInstance().getInventory().addItem(more_food);
-                    System.out.println("🧺 Lucky, you've found some more quality food: " + more_food.getName());
+                    System.out.println("Lucky, you've found some more quality food: " + more_food.getName());
                 }
 
             } else if (outcome < 80) {
                 // 10% chance: reward amulet
                 EvolutionAmulet amulet = new EvolutionAmulet();
                 Game.getInstance().getInventory().addItem(amulet);
-                System.out.println("🔮 You discovered a powerful amulet: " + amulet.getName());
+                System.out.println("You discovered a powerful amulet: " + amulet.getName());
 
             } else {
                 // 20% chance: recruit new creature
@@ -58,12 +58,12 @@ public class FightFinishedState implements GameState {
 
                 Creature newCreature = game.BeingFactory.createRandomCreature(recruitRank);
                 Game.getInstance().getCreatures().add(newCreature);
-                System.out.println("🐾 A wild creature decided to join you: " + newCreature.getName() + " (Rank " + recruitRank + ")");
+                System.out.println("A wild creature decided to join you: " + newCreature.getName() + " (Rank " + recruitRank + ")");
             }
         } else if (!creature.isAlive()) {
-            System.out.println("☠️ " + creature.getName() + " fainted...");
+            System.out.println(creature.getName() + " has died...");
         } else {
-            System.out.println("⚔️ The battle ended inconclusively.");
+            System.out.println("The battle ended without a definite result...");
         }
 
         System.out.println("\n0. Back");

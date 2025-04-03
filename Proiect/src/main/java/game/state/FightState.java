@@ -18,9 +18,9 @@ public class FightState implements GameState {
 
     @Override
     public void display() {
-        UIHelper.printTitle("⚔️ Fight Start!");
-        System.out.println("👤 Your creature: " + creature.getStatus());
-        System.out.println("👹 Enemy: " + monster.getStatus());
+        UIHelper.printTitle("Fight Start!");
+        System.out.println("Your creature: " + creature.getStatus());
+        System.out.println("Enemy: " + monster.getStatus());
         System.out.println("Press Enter to begin battle...");
         try {
             System.in.read();

@@ -11,39 +11,39 @@ public class BattleService {
     private static final Random random = new Random();
 
     public static void fight(Creature creature, Monster monster) {
-        System.out.println("⚔️ Battle Start: " + creature.getName() + " vs " + monster.getName());
+        System.out.println("A fight commences: " + creature.getName() + " vs " + monster.getName());
 
         int round = 1;
 
         while (creature.isAlive() && monster.isAlive()) {
-            System.out.println("\n🔄 Round " + round);
+            System.out.println("\n Round " + round);
 
             // Creature attacks
             int dmgToMonster = calculateDamage(creature.getPower(), monster.getDefense());
             monster.receiveDamage(dmgToMonster);
-            System.out.println("🩸 " + creature.getName() + " hits " + monster.getName() + " for " + dmgToMonster + " damage.");
+            System.out.println(creature.getName() + " hits " + monster.getName() + " for " + dmgToMonster + " damage.");
 
             if (!monster.isAlive()) break;
 
-            sleep(250);
+            sleep(750);
 
             // Monster attacks
             int dmgToCreature = calculateDamage(monster.getPower(), creature.getDefense());
             creature.receiveDamage(dmgToCreature);
-            System.out.println("💥 " + monster.getName() + " hits " + creature.getName() + " for " + dmgToCreature + " damage.");
+            System.out.println(monster.getName() + " hits " + creature.getName() + " for " + dmgToCreature + " damage.");
 
             // Status update
-            System.out.println("👤 " + creature.getStatus());
-            System.out.println("👹 " + monster.getStatus());
+            System.out.println("Your creature: " + creature.getStatus());
+            System.out.println("Monster: " + monster.getStatus());
 
-            sleep(1000);
+            sleep(1500);
             round++;
         }
 
-        System.out.println("\n🏁 Battle Over!");
+        System.out.println("\nThe battle concludes...");
 
         if (creature.isAlive()) {
-            System.out.println("✅ " + creature.getName() + " wins!");
+            System.out.println(creature.getName() + " wins!");
 
             // Random stat increase
             int powerGain = random.nextInt(2) + 1;       // 1–2
@@ -54,15 +54,12 @@ public class BattleService {
             creature.boostStat(StatType.DEFENSE, defenseGain);
             creature.boostStat(StatType.MAX_HEALTH, healthGain);
 
-            System.out.println("📈 Gained stats: +" + powerGain + " Power, +" + defenseGain + " Defense, +" + healthGain + " Max HP");
+            System.out.println("Gained stats: +" + powerGain + " Power, +" + defenseGain + " Defense, +" + healthGain + " Max HP");
 
         } else {
-            System.out.println("☠️ " + creature.getName() + " has fainted...");
+            System.out.println(creature.getName() + " has died...");
         }
 
-        System.out.println("🔚 Final Status:");
-        System.out.println("👤 " + creature.getStatus());
-        System.out.println("👹 " + monster.getStatus());
     }
 
     private static int calculateDamage(int power, int defense) {

@@ -32,7 +32,7 @@ public class InventoryUseTargetState implements GameState {
         Inventory inventory = game.getInventory();
 
         if (creatures.isEmpty()) {
-            System.out.println("⚠️ You have no creatures.");
+            System.out.println("You have no creatures.");
             game.goBack();
             return;
         }
@@ -49,7 +49,7 @@ public class InventoryUseTargetState implements GameState {
             Creature target = creatures.get(index);
 
             if (!item.canUseOn(target)) {
-                System.out.println("⚠️ Cannot use item on this creature.");
+                System.out.println("Cannot use item on this creature.");
                 return;
             }
 
@@ -58,7 +58,7 @@ public class InventoryUseTargetState implements GameState {
             game.goBack(); // back to item action menu
             game.goBack(); // back to inventory
         } else {
-            System.out.println("❌ Invalid creature.");
+            System.out.println("Invalid creature.");
         }
     }
 }

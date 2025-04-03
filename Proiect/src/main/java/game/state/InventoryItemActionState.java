@@ -43,7 +43,7 @@ public class InventoryItemActionState implements GameState {
                 inventory.removeItem(itemIndex);
                 game.goBack(); // back to inventory
             }
-            default -> System.out.println("❌ Invalid option.");
+            default -> System.out.println("Invalid option.");
         }
     }
 }

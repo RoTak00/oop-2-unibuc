@@ -55,17 +55,22 @@ public class Game {
 
     public void start()
     {
-        System.out.println("Welcome to CreatureLand");
-        System.out.println("As you wake up, you notice a new creature next to you...");
         pushState(new MainMenuState());
 
         Creature creature = BeingFactory.createRandomCreature(1);
         creatures.add(creature);
 
-        FoodItem item = FoodFactory.generateRandomFood(1);
-        inventory.addItem(item);
+
+
+        System.out.println("Welcome to Pokemock");
+        System.out.println("As you wake up, you notice a weird creature next to you...");
 
         System.out.println(creature.getName() + " says hello...");
+
+        System.out.println(" --- ");
+        System.out.println("You notice your right hand, and see that you're holding some food...");
+        FoodItem item = FoodFactory.generateRandomFood(1);
+        inventory.addItem(item);
 
         boolean playing = true;
         while(isRunning)

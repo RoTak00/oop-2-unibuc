@@ -47,7 +47,7 @@ public class InventoryMenuState implements GameState {
 
         int index = choice - 1;
         if (index < 0 || index >= inventory.getSize()) {
-            System.out.println("❌ Invalid selection.");
+            System.out.println("Invalid selection.");
             return;
         }
 

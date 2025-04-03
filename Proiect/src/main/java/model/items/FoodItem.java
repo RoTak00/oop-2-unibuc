@@ -31,12 +31,12 @@ public class FoodItem extends InventoryItem {
 
     @Override
     public void useOn(Creature creature) {
-        creature.heal(healAmount);
         creature.boostStat(enums.StatType.POWER, powerBuff);
         creature.boostStat(enums.StatType.DEFENSE, defenseBuff);
         creature.boostStat(enums.StatType.MAX_HEALTH, maxHealthBuff);
+        creature.heal(healAmount);
 
-        System.out.println("🍖 Used " + name + " on " + creature.getName() + "!");
+        System.out.println("Used " + name + " on " + creature.getName() + "!");
         System.out.println("Healed for " + healAmount + " HP.");
         if (powerBuff != 0) System.out.println("Power increased by " + powerBuff + "!");
         if (defenseBuff != 0) System.out.println("Defense increased by " + defenseBuff + "!");

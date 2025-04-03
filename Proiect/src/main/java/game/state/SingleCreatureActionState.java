@@ -36,7 +36,13 @@ public class SingleCreatureActionState implements GameState {
             case 0 -> game.goBack();
             case 1 -> System.out.println(creature.getStatus());
             case 2 -> game.pushState(new UseItemOnCreatureState(creature));
-            case 3 -> game.pushState(new FightState(creature));
+            case 3 -> {
+                if (creature.isAlive()) {
+                    game.pushState(new FightState(creature));
+                } else {
+                    System.out.println("This creature is dead...");
+                }
+            }
             default -> System.out.println("Invalid choice");
         }
     }

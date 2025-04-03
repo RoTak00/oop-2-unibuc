@@ -23,7 +23,7 @@ public class EvolutionAmulet extends InventoryItem {
     public void useOn(Creature creature) {
         int oldRank = creature.getRank();
         creature.boostStat(enums.StatType.RANK, 1);
-        System.out.println("✨ " + creature.getName() + "'s rank increased from " + oldRank + " to " + creature.getRank() + "!");
+        System.out.println(creature.getName() + "'s rank increased from " + oldRank + " to " + creature.getRank() + "!");
     }
 
     @Override

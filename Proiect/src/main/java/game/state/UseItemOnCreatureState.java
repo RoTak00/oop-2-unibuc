@@ -23,7 +23,7 @@ public class UseItemOnCreatureState implements GameState {
 
         Inventory inventory = Game.getInstance().getInventory();
         if (inventory.isEmpty()) {
-            System.out.println("📦 Inventory is empty.");
+            System.out.println("Inventory is empty.");
             return;
         }
 
@@ -50,14 +50,14 @@ public class UseItemOnCreatureState implements GameState {
 
         int index = choice - 1;
         if (index < 0 || index >= inventory.getSize()) {
-            System.out.println("❌ Invalid item.");
+            System.out.println("Invalid item.");
             return;
         }
 
         InventoryItem item = inventory.getItems().get(index);
 
         if (!item.canUseOn(target)) {
-            System.out.println("⚠️ You can’t use this item on " + target.getName() + ".");
+            System.out.println("You can’t use this item on " + target.getName() + ".");
             return;
         }
 

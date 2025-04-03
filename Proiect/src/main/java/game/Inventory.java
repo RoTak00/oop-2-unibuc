@@ -27,10 +27,10 @@ public class Inventory {
     public boolean removeItem(int index) {
         if (index >= 0 && index < items.size()) {
             InventoryItem removed = items.remove(index);
-            System.out.println("🗑 Removed " + removed.getName() + " from inventory.");
+            System.out.println("Removed " + removed.getName() + " from inventory.");
             return true;
         }
-        System.out.println("❌ Invalid inventory index.");
+        System.out.println("You have no item there.");
         return false;
     }
 
@@ -38,25 +38,25 @@ public class Inventory {
         if (index >= 0 && index < items.size()) {
             InventoryItem item = items.get(index);
             if (!item.canUseOn(target)) {
-                System.out.println("⚠️ Cannot use " + item.getName() + " on this creature.");
+                System.out.println("Cannot use " + item.getName() + " on this creature.");
                 return;
             }
 
             item.useOn(target);
             items.remove(index); // Assume single-use
-            System.out.println("✅ Used " + item.getName() + ".");
+            System.out.println("Used " + item.getName() + ".");
         } else {
-            System.out.println("❌ Invalid item index.");
+            System.out.println("You have no item there.");
         }
     }
 
     public void listItems() {
         if (items.isEmpty()) {
-            System.out.println("📦 Inventory is empty.");
+            System.out.println("Nothing in your pouch...");
             return;
         }
 
-        System.out.println("🎒 Inventory:");
+        System.out.println("Inventory:");
         for (int i = 0; i < items.size(); i++) {
             System.out.println((i + 1) + ". " + items.get(i).getFullDescription());
         }
