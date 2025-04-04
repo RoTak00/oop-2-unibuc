@@ -2,6 +2,7 @@ package game.state;
 
 import game.Game;
 import game.FoodFactory;
+import model.items.RevivalAmulet;
 import util.NameFactory;
 import model.Creature;
 import model.Monster;
@@ -45,9 +46,20 @@ public class FightFinishedState implements GameState {
 
             } else if (outcome < 80) {
                 // 10% chance: reward amulet
-                EvolutionAmulet amulet = new EvolutionAmulet();
-                Game.getInstance().getInventory().addItem(amulet);
-                System.out.println("You discovered a powerful amulet: " + amulet.getName());
+
+
+                if(random.nextInt(100) < 50) {
+                    EvolutionAmulet amulet = new EvolutionAmulet();
+                    Game.getInstance().getInventory().addItem(amulet);
+                    System.out.println("You discovered a powerful amulet: " + amulet.getName());
+                }
+                else
+                {
+                    RevivalAmulet amulet = new RevivalAmulet();
+                    Game.getInstance().getInventory().addItem(amulet);
+                    System.out.println("You discovered a powerful amulet: " + amulet.getName());
+                }
+
 
             } else {
                 // 20% chance: recruit new creature

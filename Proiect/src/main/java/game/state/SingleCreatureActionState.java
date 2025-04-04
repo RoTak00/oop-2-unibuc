@@ -22,7 +22,9 @@ public class SingleCreatureActionState implements GameState {
                 "Back",
                 "Show info",
                 "Use item",
-                "Fight"
+                "Pet creature",
+                "Fight",
+                "Kick out..."
         ), 0);
     }
 
@@ -36,12 +38,30 @@ public class SingleCreatureActionState implements GameState {
             case 0 -> game.goBack();
             case 1 -> System.out.println(creature.getStatus());
             case 2 -> game.pushState(new UseItemOnCreatureState(creature));
-            case 3 -> {
+            case 3 ->
+                    {
+                        if(creature.isAlive()) {
+                            creature.heal(5);
+                            System.out.println(creature.getName() + " is happy and healed 5 HP!");
+                        }
+                        else
+                        {
+                            System.out.println(creature.getName() + " is dead...");
+                        }
+
+                    }
+            case 4 -> {
                 if (creature.isAlive()) {
                     game.pushState(new FightState(creature));
                 } else {
                     System.out.println("This creature is dead...");
                 }
+            }
+            case 5 ->
+            {
+                game.getCreatures().remove(creature);
+                System.out.println(creature.getName() + " has been kicked out...");
+                game.goBack();
             }
             default -> System.out.println("Invalid choice");
         }

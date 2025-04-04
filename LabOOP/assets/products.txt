@@ -1,0 +1,5 @@
+P001,Pen,2.50
+P002,Notebook,5.00
+P003,Eraser,-1.00
+P004,Pencil,6
+P005,x,Pencil,6
