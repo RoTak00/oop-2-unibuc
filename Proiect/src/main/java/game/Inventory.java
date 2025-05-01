@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Inventory {
     private static final int MAX_SIZE = 10;
-    private final List<InventoryItem> items;
+    private List<InventoryItem> items;
 
     public Inventory() {
         items = new ArrayList<>();
@@ -76,5 +76,9 @@ public class Inventory {
 
     public List<InventoryItem> getItems() {
         return new ArrayList<>(items); // Immutable copy
+    }
+
+    public void setItems(List<InventoryItem> items) {
+        this.items = items;
     }
 }

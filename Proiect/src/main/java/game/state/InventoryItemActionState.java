@@ -1,5 +1,6 @@
 package game.state;
 
+import db.AuditService;
 import game.Inventory;
 import game.Game;
 import model.items.InventoryItem;
@@ -40,6 +41,7 @@ public class InventoryItemActionState implements GameState {
             case 0 -> game.goBack(); // back to inventory
             case 1 -> game.pushState(new InventoryUseTargetState(item, itemIndex));
             case 2 -> {
+                AuditService.getInstance().audit("remove_item_"+itemIndex);
                 inventory.removeItem(itemIndex);
                 game.goBack(); // back to inventory
             }

@@ -1,5 +1,6 @@
 package game.state;
 
+import db.AuditService;
 import game.Game;
 import model.Creature;
 import ui.InputHelper;
@@ -36,11 +37,15 @@ public class SingleCreatureActionState implements GameState {
         switch(choice)
         {
             case 0 -> game.goBack();
-            case 1 -> System.out.println(creature.getStatus());
+            case 1 -> {
+                AuditService.getInstance().audit("creature_status_"+creature.getName());
+                System.out.println(creature.getStatus());
+            }
             case 2 -> game.pushState(new UseItemOnCreatureState(creature));
             case 3 ->
                     {
                         if(creature.isAlive()) {
+                            AuditService.getInstance().audit("creature_pet_"+creature.getName());
                             creature.heal(5);
                             System.out.println(creature.getName() + " is happy and healed 5 HP!");
                         }
@@ -52,6 +57,7 @@ public class SingleCreatureActionState implements GameState {
                     }
             case 4 -> {
                 if (creature.isAlive()) {
+                    AuditService.getInstance().audit("creature_fight_"+creature.getName());
                     game.pushState(new FightState(creature));
                 } else {
                     System.out.println("This creature is dead...");
@@ -59,6 +65,7 @@ public class SingleCreatureActionState implements GameState {
             }
             case 5 ->
             {
+                AuditService.getInstance().audit("creature_kick_"+creature.getName());
                 game.getCreatures().remove(creature);
                 System.out.println(creature.getName() + " has been kicked out...");
                 game.goBack();

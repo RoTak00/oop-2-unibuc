@@ -1,5 +1,6 @@
 package game.state;
 
+import db.AuditService;
 import game.Game;
 import model.Creature;
 import game.Inventory;
@@ -61,6 +62,7 @@ public class UseItemOnCreatureState implements GameState {
             return;
         }
 
+        AuditService.getInstance().audit("item_use_"+index+"_on_"+target.getName());
         item.useOn(target);
         inventory.removeItem(index);
         game.goBack(); // go back to SingleCreatureActionState

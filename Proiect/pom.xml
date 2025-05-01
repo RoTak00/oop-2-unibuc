@@ -8,6 +8,16 @@
     <artifactId>Proiect</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <!-- ✅ MySQL JDBC Driver -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+
+    </dependencies>
+
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>

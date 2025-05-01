@@ -14,6 +14,10 @@ public class RevivalAmulet extends InventoryItem {
         super(template.name(), template.description());
     }
 
+    public RevivalAmulet(String name, String description) {
+        super(name, description);
+    }
+
     @Override
     public boolean canUseOn(Creature creature) {
         return !creature.isAlive();
@@ -28,5 +32,12 @@ public class RevivalAmulet extends InventoryItem {
     @Override
     public String getFullDescription() {
         return name + ": " + description + " | Revives a dead creature";
+    }
+
+
+    @Override
+    public String getType()
+    {
+        return "revival_amulet";
     }
 }

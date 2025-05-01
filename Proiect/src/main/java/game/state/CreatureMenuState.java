@@ -1,5 +1,6 @@
 package game.state;
 
+import db.AuditService;
 import game.Game;
 import ui.UIHelper;
 import ui.InputHelper;
@@ -27,7 +28,10 @@ public class CreatureMenuState implements GameState {
         switch(choice)
         {
             case 0 -> game.goBack();
-            case 1 -> game.listCreatures();
+            case 1 -> {
+                AuditService.getInstance().audit("list_creatures");
+                game.listCreatures();
+            }
             case 2 -> game.pushState(new CreatureSelectMenuState());
             default -> System.out.println("Invalid choice");
         }

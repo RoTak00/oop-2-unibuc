@@ -9,6 +9,7 @@ public abstract class Creature implements Being {
     protected int currentHealth;
     protected int power;
     protected int defense;
+    protected Integer id;
 
     public Creature(String name, int rank, int maxHealth, int power, int defense) {
         this.name = name;
@@ -48,6 +49,11 @@ public abstract class Creature implements Being {
     public int getDefense() {
         return defense;
     }
+
+    @Override
+    public void setId(int id) { this.id = id; }
+    @Override
+    public Integer getId() { return id; }
 
     @Override
     public boolean isAlive() {

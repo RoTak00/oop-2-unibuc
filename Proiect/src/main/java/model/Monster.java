@@ -9,6 +9,7 @@ public class Monster implements Being {
     private int currentHealth;
     private final int power;
     private final int defense;
+    protected Integer id;
 
     public Monster(String name, int rank, int maxHealth, int power, int defense) {
         this.name = name;
@@ -48,6 +49,12 @@ public class Monster implements Being {
     public int getDefense() {
         return defense;
     }
+
+    @Override
+    public Integer getId() { return id; }
+
+    @Override
+    public void setId(int id) { this.id = id; }
 
     @Override
     public boolean isAlive() {

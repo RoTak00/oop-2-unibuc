@@ -14,6 +14,8 @@ public class EvolutionAmulet extends InventoryItem {
         super(template.name(), template.description());
     }
 
+    public EvolutionAmulet(String name, String description) { super(name, description); }
+
     @Override
     public boolean canUseOn(Creature creature) {
         return creature.isAlive();
@@ -24,6 +26,12 @@ public class EvolutionAmulet extends InventoryItem {
         int oldRank = creature.getRank();
         creature.boostStat(enums.StatType.RANK, 1);
         System.out.println(creature.getName() + "'s rank increased from " + oldRank + " to " + creature.getRank() + "!");
+    }
+
+    @Override
+    public String getType()
+    {
+        return "evolution_amulet";
     }
 
     @Override

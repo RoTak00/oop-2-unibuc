@@ -9,6 +9,11 @@ public class FoodItem extends InventoryItem {
     private final int defenseBuff;
     private final int maxHealthBuff;
 
+    public int getHealAmount() { return healAmount; }
+    public int getPowerBuff() { return powerBuff; }
+    public int getDefenseBuff() { return defenseBuff; }
+    public int getMaxHealthBuff() { return maxHealthBuff; }
+
     // Simple constructor (heals only)
     public FoodItem(String name, String description, int healAmount) {
         this(name, description, healAmount, 0, 0, 0);
@@ -53,5 +58,12 @@ public class FoodItem extends InventoryItem {
         if (maxHealthBuff > 0) sb.append(" | +").append(maxHealthBuff).append(" Max HP");
 
         return sb.toString();
+    }
+
+
+    @Override
+    public String getType()
+    {
+        return "food";
     }
 }

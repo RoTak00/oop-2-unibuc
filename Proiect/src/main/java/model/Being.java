@@ -11,6 +11,9 @@ public interface Being {
     int getPower();
     int getDefense();
 
+    void setId(int id);
+    Integer getId();
+
     boolean isAlive();
 
     void receiveDamage(int amount);

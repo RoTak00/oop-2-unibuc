@@ -1,5 +1,8 @@
 package game;
 
+import db.DatabaseInitializer;
+import db.repository.CreatureRepository;
+import db.repository.InventoryItemRepository;
 import game.state.GameState;
 import game.state.MainMenuState;
 import model.Creature;
@@ -7,6 +10,7 @@ import model.items.FoodItem;
 import ui.InputHelper;
 import ui.UIHelper;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class Game {
@@ -15,7 +19,7 @@ public class Game {
     private final Deque<GameState> stateStack = new ArrayDeque<>();
     private boolean isRunning = true;
 
-    private final List<Creature> creatures = new ArrayList<>();
+    private List<Creature> creatures = new ArrayList<>();
 
     private final Scanner scanner = new Scanner(System.in);
     private final Random random = new Random();
@@ -48,31 +52,50 @@ public class Game {
     }
 
 
-    public void exit()
+    public void exit() throws SQLException
     {
+
+        CreatureRepository.saveAll(creatures);
+        InventoryItemRepository.saveAll(inventory.getItems());
         isRunning = false;
     }
 
-    public void start()
+    public void reset() throws SQLException
     {
+        this.exit();
+
+        DatabaseInitializer.reset();
+
+        this.start();
+    }
+
+    public void start() throws SQLException
+    {
+        isRunning = true;
         pushState(new MainMenuState());
 
-        Creature creature = BeingFactory.createRandomCreature(1);
-        creatures.add(creature);
+        creatures = CreatureRepository.loadAll();
+        inventory.setItems(InventoryItemRepository.loadAll());
 
+        if(creatures.isEmpty()) {
+            Creature creature = BeingFactory.createRandomCreature(1);
+            creatures.add(creature);
 
+            System.out.println("Welcome to Pokemock");
+            System.out.println("As you wake up, you notice a weird creature next to you...");
 
-        System.out.println("Welcome to Pokemock");
-        System.out.println("As you wake up, you notice a weird creature next to you...");
+            System.out.println(creature.getName() + " says hello...");
 
-        System.out.println(creature.getName() + " says hello...");
+            System.out.println(" --- ");
+            System.out.println("You notice your right hand, and see that you're holding some food...");
+            FoodItem item = FoodFactory.generateRandomFood(1);
+            inventory.addItem(item);
+        }
+        else
+        {
+            System.out.println("Welcome back to Pokemock!");
+        }
 
-        System.out.println(" --- ");
-        System.out.println("You notice your right hand, and see that you're holding some food...");
-        FoodItem item = FoodFactory.generateRandomFood(1);
-        inventory.addItem(item);
-
-        boolean playing = true;
         while(isRunning)
         {
             GameState currentState = stateStack.peek();

@@ -83,3 +83,32 @@ Pe lângă ce e marcat ca „nu e implementat”, există numeroase feature-uri 
 
 Foarte multe altele pot fi gândite.
 
+
+## Persistenta si Baza de Date (Partea a 2-a)
+
+Pentru implementarea persistentei, se foloseste o baza de date MySQL, la care
+programul se conecteaza utilizand JDBC.
+
+Astfel, pentru aceasta, s-a creat package-ul db, care include Clase serviciu folosite 
+pentru comunicarea cu baza de date
+
+- **DB**: Permite conectarea la o baze de date hostata local MySQL deschisa prin portul 3306, nume utilizator pokemock_intellij, parola intellijpa55!, baza de date pokemock.
+- **DatabaseInitializer** - Initializeaza baza de date cu tabelele necesare (Momentan sunt folosite doar Creatures si Inventory_Items). De asemenea, expune o functie statica folosita pentru functionalitatea de New Game. Nu exista implementate save file-uri. 
+
+In subpackage-ul *repository* exista doua clase folosite pentru incarcarea datelor si salvarea lor in baza de date.
+De notat este faptul ca salvarea se face doar la inchiderea jocului, nu dinamic dupa fiecare modificare in memorie.
+
+Astfel, exista clasese **CreatureRepository** si **InventoryItemRepository** care expun functiile loadAll si saveAll
+
+### New Game
+
+Avand in vedere ca progresul este salvat permanent, a fost implementata functionalitatea de New Game care permite utilizatorului sa reseteze jocul.
+Aceasta functionalitate poate fi accesata prin meniul principal, si duce la un meniu de confirmare. Confirmarea are ca efect Resetarea jocului si curatarea bazei de date.
+
+Pentru aceasta, a fost creata clasa **NewGameState** care implementeaza *GameState*
+
+## Sistem Audit
+
+In package-ul *db* exista clasa Singleton **AuditService** care expune functia **audit**. Aceasta permite notarea actiunilor facute de utilizator intr-un fisier definit static, audit_log.csv.
+
+In actiunile GameState apar apeluri ale functiei audit pentru marcarea actiunilor jucatorului.
