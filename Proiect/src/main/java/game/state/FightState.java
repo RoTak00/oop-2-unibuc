@@ -7,6 +7,8 @@ import model.Monster;
 import game.BeingFactory;
 import ui.UIHelper;
 
+import java.sql.SQLException;
+
 public class FightState implements GameState {
     private final Creature creature;
     private final Monster monster;
@@ -28,7 +30,7 @@ public class FightState implements GameState {
     }
 
     @Override
-    public void handleInput(Game game) {
+    public void handleInput(Game game) throws SQLException {
         BattleService.fight(creature, monster);
         game.pushState(new FightFinishedState(creature, monster));
     }

@@ -66,6 +66,12 @@ public class SingleCreatureActionState implements GameState {
             case 5 ->
             {
                 AuditService.getInstance().audit("creature_kick_"+creature.getName());
+
+                if(creature.getId() != null)
+                {
+                    db.repository.CreatureRepository.deleteById(creature.getId());
+                }
+
                 game.getCreatures().remove(creature);
                 System.out.println(creature.getName() + " has been kicked out...");
                 game.goBack();

@@ -56,6 +56,11 @@ public class CreatureRepository {
         }
     }
 
+    public static void save(Creature creature) throws SQLException {
+        Connection conn = DB.getConnection();
+        insert(conn, creature);
+    }
+
     private static void insert(Connection conn, Creature c) throws SQLException {
         String sql = """
                     INSERT INTO creatures (name, type, `rank`, max_health, current_health, power, defense, status)
@@ -86,6 +91,21 @@ public class CreatureRepository {
             ps.executeUpdate();
         }
     }
+
+    public static void deleteById(int id) {
+        String sql = "DELETE FROM creatures WHERE id = ?";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Failed to delete creature: " + e.getMessage());
+        }
+    }
+
 
     private static void fillStatement(PreparedStatement ps, Creature c) throws SQLException {
         ps.setString(1, c.getName());

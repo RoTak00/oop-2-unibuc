@@ -30,6 +30,7 @@ public class NewGameState implements GameState {
             case 1 -> {
                 AuditService.getInstance().audit("new_game");
                 game.reset();
+
             }
             default -> game.goBack();
         }

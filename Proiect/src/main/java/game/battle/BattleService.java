@@ -5,15 +5,20 @@ import game.BeingFactory;
 import model.Creature;
 import model.Monster;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class BattleService {
     private static final Random random = new Random();
 
-    public static void fight(Creature creature, Monster monster) {
+    public static void fight(Creature creature, Monster monster) throws SQLException {
         System.out.println("A fight commences: " + creature.getName() + " vs " + monster.getName());
 
         int round = 1;
+        List<FightHistoryHelper.RoundLog> roundLogs = new ArrayList<>();
+
 
         while (creature.isAlive() && monster.isAlive()) {
             System.out.println("\n Round " + round);
@@ -21,23 +26,33 @@ public class BattleService {
             // Creature attacks
             int dmgToMonster = calculateDamage(creature.getPower(), monster.getDefense());
             monster.receiveDamage(dmgToMonster);
-            System.out.println(creature.getName() + " hits " + monster.getName() + " for " + dmgToMonster + " damage.");
+            String creatureAction = creature.getName() + " hits " + monster.getName() + " for " + dmgToMonster + " damage.";
+            System.out.println(creatureAction);
 
-            if (!monster.isAlive()) break;
+            String monsterAction;
+            if (monster.isAlive()){
+                sleep(750);
 
-            sleep(750);
+                // Monster attacks
+                int dmgToCreature = calculateDamage(monster.getPower(), creature.getDefense());
+                creature.receiveDamage(dmgToCreature);
+                monsterAction = monster.getName() + " hits " + creature.getName() + " for " + dmgToCreature + " damage.";
+                System.out.println(monsterAction);
 
-            // Monster attacks
-            int dmgToCreature = calculateDamage(monster.getPower(), creature.getDefense());
-            creature.receiveDamage(dmgToCreature);
-            System.out.println(monster.getName() + " hits " + creature.getName() + " for " + dmgToCreature + " damage.");
+                // Status update
+                System.out.println("Your creature: " + creature.getStatus());
+                System.out.println("Monster: " + monster.getStatus());
 
-            // Status update
-            System.out.println("Your creature: " + creature.getStatus());
-            System.out.println("Monster: " + monster.getStatus());
+                sleep(1500);
+            }
+            else
+            {
+                monsterAction = monster.getName() + " is defeated.";
+            }
 
-            sleep(1500);
+            roundLogs.add(new FightHistoryHelper.RoundLog(round, creatureAction, monsterAction));
             round++;
+
         }
 
         System.out.println("\nThe battle concludes...");
@@ -59,6 +74,17 @@ public class BattleService {
         } else {
             System.out.println(creature.getName() + " has died...");
         }
+
+        db.repository.MonsterRepository.create(monster);
+
+        String historyJson = FightHistoryHelper.generateFightHistoryJson(creature, monster, roundLogs);
+
+        if(creature.getId() == null)
+        {
+            db.repository.CreatureRepository.save(creature);
+        }
+
+        db.repository.FightRepository.logFight(creature, monster, creature.isAlive(), historyJson);
 
     }
 

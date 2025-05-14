@@ -3,9 +3,11 @@ package game;
 import db.DatabaseInitializer;
 import db.repository.CreatureRepository;
 import db.repository.InventoryItemRepository;
+import db.repository.UserRepository;
 import game.state.GameState;
 import game.state.MainMenuState;
 import model.Creature;
+import model.User;
 import model.items.FoodItem;
 import ui.InputHelper;
 import ui.UIHelper;
@@ -18,6 +20,7 @@ public class Game {
     private static Game instance;
     private final Deque<GameState> stateStack = new ArrayDeque<>();
     private boolean isRunning = true;
+    private User user;
 
     private List<Creature> creatures = new ArrayList<>();
 
@@ -76,15 +79,17 @@ public class Game {
 
         creatures = CreatureRepository.loadAll();
         inventory.setItems(InventoryItemRepository.loadAll());
+        List<User> users = UserRepository.loadAll();
 
-        if(creatures.isEmpty()) {
+        if(users.isEmpty()) {
             Creature creature = BeingFactory.createRandomCreature(1);
             creatures.add(creature);
 
             System.out.println("Welcome to Pokemock");
             System.out.println("As you wake up, you notice a weird creature next to you...");
 
-            System.out.println(creature.getName() + " says hello...");
+            user = new User("User");
+            UserRepository.create(user);
 
             System.out.println(" --- ");
             System.out.println("You notice your right hand, and see that you're holding some food...");
@@ -93,6 +98,8 @@ public class Game {
         }
         else
         {
+            user = users.get(0);
+            System.out.println("You wake up - it's a beautiful day to be " + user.getName() + "!");
             System.out.println("Welcome back to Pokemock!");
         }
 
@@ -114,6 +121,10 @@ public class Game {
         {
             System.out.println((i + 1) + ". " + creatures.get(i).getShortStatus());
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 
 }

@@ -10,11 +10,13 @@ public class MainMenuState implements GameState {
     @Override
     public void display()
     {
-        UIHelper.printLine();
+        UIHelper.printTitle("Hello, " + Game.getInstance().getUser().getName());
         UIHelper.printMenu(List.of(
                 "Exit",
                 "Creatures",
                 "Inventory",
+                "Fight Log",
+                "Settings",
                 "Start a new game"
         ), 0);
     }
@@ -28,7 +30,9 @@ public class MainMenuState implements GameState {
             case 0 -> game.exit();
             case 1 -> game.pushState(new CreatureSelectMenuState());
             case 2 -> game.pushState(new InventoryMenuState());
-            case 3 -> game.pushState(new NewGameState());
+            case 3 -> game.pushState(new FightLogMenuState());
+            case 4 -> game.pushState(new SettingsMenuState());
+            case 5 -> game.pushState(new NewGameState());
             default -> System.out.println("Invalid option");
         }
     }

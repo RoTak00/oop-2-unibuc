@@ -82,6 +82,15 @@ public class DatabaseInitializer {
                     )
                 """);
 
+        // Users table
+        stmt.executeUpdate("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(100) NOT NULL
+            )
+        """);
+
+
 
     }
 
@@ -94,5 +103,6 @@ public class DatabaseInitializer {
         stmt.executeUpdate("DELETE FROM inventory_items");
         stmt.executeUpdate("DELETE FROM creatures");
         stmt.executeUpdate("DELETE FROM monsters");
+        stmt.executeUpdate("DELETE FROM users");
     }
 }
